@@ -26,7 +26,7 @@ func (h *Handler) DeleteTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Удаляем задачу из базы
-	_, err = database.DoneTask(h.DB, id)
+	err = database.DoneTask(h.DB, id)
 	if err != nil {
 		http.Error(w, `{"error": "failed to delete task"}`, http.StatusBadRequest)
 		return

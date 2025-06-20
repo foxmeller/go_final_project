@@ -53,3 +53,13 @@ func InitDB() {
 		}
 	}
 }
+
+func CloseDB() {
+	if Db != nil {
+		if err := Db.Close(); err != nil {
+			log.Printf("Error closing the database: %v", err)
+		} else {
+			log.Println("Database connection closed")
+		}
+	}
+}

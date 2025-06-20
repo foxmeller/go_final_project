@@ -18,10 +18,10 @@ func AddTask(db *sql.DB, task models.Task) (int64, error) {
 	}
 
 	// Получаем ID последней добавленной задачи
-	Id, err := res.LastInsertId()
+	id, err := res.LastInsertId()
 	if err != nil {
 		log.Println("failed to get the ID of the added task", err)
 		return 0, err
 	}
-	return Id, nil
+	return id, nil
 }

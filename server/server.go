@@ -37,7 +37,7 @@ func StartServer() {
 	if port == "" {
 		port = "7540"
 	}
-	log.Println("The server is running on port 7540")
+	log.Printf("The server is running on port %s\n", port)
 	if err := http.ListenAndServe(port, r); err != nil {
 		log.Fatalf("server startup error: %s\n", err.Error())
 		return

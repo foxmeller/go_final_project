@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -43,12 +42,11 @@ func (h *Handler) DoneTask(w http.ResponseWriter, r *http.Request) {
 	task := *taskFromDB
 	// Если правило повтороения отсутствует, удаляем задачу из базы
 	if task.Repeat == "" {
-		doneTask, err := database.DoneTask(h.DB, id)
+		err := database.DoneTask(h.DB, id)
 		if err != nil {
 			http.Error(w, `{"error": "failed to delete task"}`, http.StatusBadRequest)
 			return
 		}
-		log.Println("Задача выполнена", doneTask)
 
 		// Формирование ответа
 		w.Header().Set("Content-Type", "application/json, charset=UTF-8")
@@ -65,12 +63,11 @@ func (h *Handler) DoneTask(w http.ResponseWriter, r *http.Request) {
 	}
 	task.Date = nextDate
 
-	updatedTaskID, err := database.PutTask(h.DB, task)
+	_, err = database.PutTask(h.DB, task)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	log.Println("Задача обновлена", updatedTaskID)
 
 	// Формирование ответа
 	w.Header().Set("Content-Type", "application/json, charset=UTF-8")
